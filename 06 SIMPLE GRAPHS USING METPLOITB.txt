@@ -1,0 +1,40 @@
+import matplotlib.pyplot as plt
+
+# Data for plotting
+x = [1, 2, 3, 4, 5]
+y = [2, 4, 6, 8, 10]
+categories = ['A', 'B', 'C', 'D', 'E']
+values = [3, 7, 2, 5, 8]
+
+# 1. Line Graph
+plt.figure(figsize=(8, 5))
+plt.plot(x, y, label="Line Plot", color='b', marker='o')
+plt.title("Simple Line Plot")
+plt.xlabel("X-axis")
+plt.ylabel("Y-axis")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# 2. Bar Graph
+plt.figure(figsize=(8, 5))
+plt.bar(categories, values, color='green', edgecolor='black')
+plt.title("Simple Bar Plot")
+plt.xlabel("Categories")
+plt.ylabel("Values")
+plt.show()
+
+# 3. Scatter Plot
+plt.figure(figsize=(8, 5))
+plt.scatter(x, y, color='red', label="Scatter Plot")
+plt.title("Simple Scatter Plot")
+plt.xlabel("X-axis")
+plt.ylabel("Y-axis")
+plt.legend()
+plt.show()
+
+# 4. Pie Chart
+plt.figure(figsize=(6, 6))
+plt.pie(values, labels=categories, autopct='%1.1f%%', startangle=90)
+plt.title("Simple Pie Chart")
+plt.show()

@@ -1,0 +1,26 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+def generate_gaussian_data(mean, std_dev, num_samples):
+    # Generate random numbers from a Gaussian distribution
+    data = np.random.normal(mean, std_dev, num_samples)
+    return data
+
+# Example usage
+mean = float(input("Enter the mean of the distribution: "))
+std_dev = float(input("Enter the standard deviation of the distribution: "))
+num_samples = int(input("Enter the number of samples to generate: "))
+
+# Generate random Gaussian data
+data = generate_gaussian_data(mean, std_dev, num_samples)
+
+# Display the generated data
+print("\nGenerated Gaussian data:")
+print(data)
+
+# Optionally, visualize the data using a histogram
+plt.hist(data, bins=30, edgecolor='black', alpha=0.7)
+plt.title('Histogram of Gaussian Distribution')
+plt.xlabel('Value')
+plt.ylabel('Frequency')
+plt.show()

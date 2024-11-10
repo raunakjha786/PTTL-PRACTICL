@@ -1,0 +1,118 @@
+import mysql.connector
+from mysql.connector import Error
+
+def connect():
+    try:
+        # Connect to the MySQL database
+        connection = mysql.connector.connect(
+            host="localhost",
+            user="your_username",
+            password="your_password",
+            database="your_database"
+        )
+        if connection.is_connected():
+            print("Connected to the database.")
+            return connection
+    except Error as e:
+        print(f"Error connecting to MySQL: {e}")
+        return None
+
+def create_table(connection):
+    try:
+        cursor = connection.cursor()
+        # Create a sample table
+        create_table_query = """
+        CREATE TABLE IF NOT EXISTS employees (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            age INT,
+            department VARCHAR(100)
+        )
+        """
+        cursor.execute(create_table_query)
+        print("Table 'employees' created successfully.")
+    except Error as e:
+        print(f"Error creating table: {e}")
+
+def insert_data(connection):
+    try:
+        cursor = connection.cursor()
+        # Insert sample data into the table
+        insert_query = """
+        INSERT INTO employees (name, age, department)
+        VALUES (%s, %s, %s)
+        """
+        data = [
+            ("Alice", 30, "Engineering"),
+            ("Bob", 24, "Marketing"),
+            ("Charlie", 29, "Sales")
+        ]
+        cursor.executemany(insert_query, data)
+        connection.commit()
+        print("Sample data inserted successfully.")
+    except Error as e:
+        print(f"Error inserting data: {e}")
+
+def select_data(connection):
+    try:
+        cursor = connection.cursor()
+        # Select data with a condition
+        select_query = "SELECT * FROM employees WHERE age > %s"
+        age_condition = (25,)
+        cursor.execute(select_query, age_condition)
+        result = cursor.fetchall()
+        print("Selecting records with age > 25:")
+        for row in result:
+            print(row)
+    except Error as e:
+        print(f"Error selecting data: {e}")
+
+def update_data(connection):
+    try:
+        cursor = connection.cursor()
+        # Update records with a condition
+        update_query = "UPDATE employees SET department = %s WHERE name = %s"
+        update_data = ("Human Resources", "Alice")
+        cursor.execute(update_query, update_data)
+        connection.commit()
+        print("Record updated successfully.")
+    except Error as e:
+        print(f"Error updating data: {e}")
+
+def delete_data(connection):
+    try:
+        cursor = connection.cursor()
+        # Delete records with a condition
+        delete_query = "DELETE FROM employees WHERE name = %s"
+        delete_data = ("Bob",)
+        cursor.execute(delete_query, delete_data)
+        connection.commit()
+        print("Record deleted successfully.")
+    except Error as e:
+        print(f"Error deleting data: {e}")
+
+def main():
+    # Connect to the database
+    connection = connect()
+    if connection:
+        # Create table
+        create_table(connection)
+        
+        # Insert sample data
+        insert_data(connection)
+        
+        # Select data with conditions
+        select_data(connection)
+        
+        # Update records
+        update_data(connection)
+        
+        # Delete records
+        delete_data(connection)
+        
+        # Close the database connection
+        connection.close()
+        print("Database connection closed.")
+
+if __name__ == "__main__":
+    main()

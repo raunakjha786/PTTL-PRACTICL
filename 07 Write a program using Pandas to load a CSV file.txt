@@ -1,0 +1,29 @@
+import pandas as pd
+
+# Load the CSV file
+data = pd.read_csv('sample_data.csv')
+
+# Display the first few rows of the dataset
+print("Original Dataset:")
+print(data)
+
+# Check for missing values
+print("\nMissing values before cleaning:")
+print(data.isnull().sum())
+
+# Data cleaning: Fill missing values in the 'age' column with the median
+data['age'] = data['age'].fillna(data['age'].median())
+
+# Data cleaning: Fill missing values in the 'city' column with the most frequent value
+data['city'] = data['city'].fillna(data['city'].mode()[0])
+
+# Check for missing values again after cleaning
+print("\nMissing values after cleaning:")
+print(data.isnull().sum())
+
+# Display the cleaned data
+print("\nCleaned Dataset:")
+print(data)
+
+# Save the cleaned data to a new CSV file
+data.to_csv('cleaned_sample_data.csv', index=False)

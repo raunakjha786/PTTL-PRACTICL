@@ -1,0 +1,31 @@
+import re
+
+def search_and_replace(file_path, search_pattern, replace_string):
+    # Read the contents of the file
+    with open(file_path, 'r') as file:
+        file_contents = file.read()
+
+    # Perform the search and replace operation using regular expressions
+    updated_contents = re.sub(search_pattern, replace_string, file_contents)
+
+    # Print the updated contents to show the changes
+    print("\nOriginal text:")
+    print(file_contents)
+    
+    print("\nUpdated text:")
+    print(updated_contents)
+
+    # Write the updated contents back to the file
+    with open(file_path, 'w') as file:
+        file.write(updated_contents)
+
+    print("\nSearch and replace operation completed successfully.")
+
+# Example usage
+file_path = input("Enter the path to the text file: ")
+search_pattern = input("Enter the search pattern (regex): ")
+replace_string = input("Enter the replacement string: ")
+
+# Perform search and replace
+search_and_replace(file_path, search_pattern, replace_string)
+

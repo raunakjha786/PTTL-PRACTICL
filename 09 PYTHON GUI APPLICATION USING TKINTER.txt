@@ -1,0 +1,51 @@
+import tkinter as tk
+from tkinter import messagebox
+import re
+
+# Function to validate the input and display the submitted data
+def submit_data():
+    name = name_entry.get()
+    age = age_entry.get()
+    email = email_entry.get()
+
+    # Basic validation checks
+    if not name:
+        messagebox.showerror("Validation Error", "Please enter your name.")
+        return
+    if not age.isdigit():
+        messagebox.showerror("Validation Error", "Please enter a valid age.")
+        return
+    if not re.match(r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$", email):
+        messagebox.showerror("Validation Error", "Please enter a valid email address.")
+        return
+
+    # If validation passes, display the submitted data
+    submitted_data = f"Name: {name}\nAge: {age}\nEmail: {email}"
+    messagebox.showinfo("Submitted Data", submitted_data)
+
+# Creating the main application window
+app = tk.Tk()
+app.title("User Form")
+app.geometry("300x250")
+
+# Adding form labels and entry fields
+tk.Label(app, text="Enter your details", font=("Arial", 14)).pack(pady=10)
+
+tk.Label(app, text="Name").pack()
+name_entry = tk.Entry(app)
+name_entry.pack()
+
+tk.Label(app, text="Age").pack()
+age_entry = tk.Entry(app)
+age_entry.pack()
+
+tk.Label(app, text="Email").pack()
+email_entry = tk.Entry(app)
+email_entry.pack()
+
+# Submit button
+submit_button = tk.Button(app, text="Submit", command=submit_data)
+submit_button.pack(pady=10)
+
+# Run the application
+app.mainloop()

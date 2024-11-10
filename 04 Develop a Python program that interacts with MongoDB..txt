@@ -1,0 +1,54 @@
+from pymongo import MongoClient
+
+# Connect to the MongoDB server (Make sure MongoDB is running locally or provide connection string for a remote MongoDB)
+client = MongoClient('mongodb://localhost:27017/')
+
+# Choose the database and collection
+db = client['sample_database']
+collection = db['sample_collection']
+
+# Create: Insert data into the collection
+def create_data():
+    sample_data = {
+        "name": "John Doe",
+        "age": 29,
+        "address": "123 Main St, Springfield"
+    }
+    result = collection.insert_one(sample_data)
+    print(f"Inserted document with ID: {result.inserted_id}")
+
+# Read: Fetch data from the collection
+def read_data():
+    print("\nReading data from the collection:")
+    documents = collection.find()  # Get all documents
+    for doc in documents:
+        print(doc)
+
+# Update: Modify a document in the collection
+def update_data():
+    filter_query = {"name": "John Doe"}
+    new_data = {"$set": {"age": 30, "address": "456 Elm St, Springfield"}}
+    result = collection.update_one(filter_query, new_data)
+    if result.matched_count > 0:
+        print(f"Matched {result.matched_count} document(s) and updated it.")
+    else:
+        print("No document matched the filter.")
+
+# Delete: Remove a document from the collection
+def delete_data():
+    filter_query = {"name": "John Doe"}
+    result = collection.delete_one(filter_query)
+    if result.deleted_count > 0:
+        print(f"Deleted {result.deleted_count} document(s).")
+    else:
+        print("No document matched the filter.")
+
+# Main execution
+if __name__ == "__main__":
+    # Perform CRUD operations
+    create_data()  # Insert a new document
+    read_data()    # Display all documents in the collection
+    update_data()  # Update the document with name "John Doe"
+    read_data()    # Display documents after the update
+    delete_data()  # Delete the document with name "John Doe"
+    read_data()    # Display documents after deletion
